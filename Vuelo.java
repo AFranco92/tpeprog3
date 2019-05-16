@@ -1,5 +1,7 @@
 package tpe;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -48,6 +50,10 @@ public class Vuelo {
 	
 	public Set<String> getAerolineas() {
 		return this.aerolineasyasientos.keySet();
+	}
+	
+	public Collection<Integer> getAsientosEnTotal() {
+		return this.aerolineasyasientos.values();
 	}
 	
 	public Map<String, Integer> getAerolineasYAsientos() {
