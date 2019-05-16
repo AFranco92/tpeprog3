@@ -101,7 +101,7 @@ public class GrafoVuelos {
 			km += a.getVuelo(ady).getKilometros();
 			if(ady.getPais().equals(paisd) && a.getPais().equals(paiso) && ady.getColor() == "No visitado") {
 				resultado.add(ady);
-				resultado.addAll(a.getVuelo(ady).getAerolineas());
+				resultado.addAll(a.getVuelo(ady).getAerolineasDisponibles());
 				resultado.add(km);
 				this.DFSVisit2(paiso, paisd, ady, resultado, km);
 			}

@@ -9,6 +9,7 @@ public class Sistema {
 		Aeropuerto a3 = new Aeropuerto("Kennedy", "USA");
 		Vuelo v1 = new Vuelo(a1, a2, 5000);
 		Vuelo v2 = new Vuelo(a2, a3, 12000);
+		Reserva r1 = new Reserva(a1, a2, "Aerolineas Argentinas", 10);
 		grafo.setAeropuerto(a1);
 		grafo.setAeropuerto(a2);
 		grafo.setAeropuerto(a3);
@@ -22,5 +23,4 @@ public class Sistema {
 		grafo.servicio2(a1, a3);
 		grafo.servicio3("ARG", "ESP");
 	}
-
 }
