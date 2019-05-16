@@ -51,6 +51,16 @@ public class Aeropuerto {
 		return this.vuelos;
 	}
 	
+	public Vuelo getVuelo(Aeropuerto a) {
+		Vuelo resultado = new Vuelo();
+		for(int i = 0; i < this.vuelos.size(); i++) {
+			if(this.vuelos.get(i).getAeropuertoAlcanzado().equals(a)) {
+				resultado = this.vuelos.get(i);
+			}
+		}
+		return resultado;
+	}
+	
 	public boolean tieneAdyacenteA(Aeropuerto a) {
 		return this.getAeropuertosAdyacentes().contains(a);
 	}

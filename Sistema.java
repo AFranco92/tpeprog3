@@ -19,6 +19,7 @@ public class Sistema {
 		v1.setAerolineaYasientos("Aerolineas Argentinas", 50);
 		v2.setAerolineaYasientos("United Airlines", 70);
 		grafo.servicio1(a1, a3, "Aerolineas Argentinas", v2);
+		grafo.servicio2(a1, a3);
 	}
 
 }

@@ -31,40 +31,48 @@ public class GrafoVuelos {
 		}
 		return resultado;
 	}
+
+	/*Para un par de aeropuertos de origen y destino, obtener todos los vuelos disponibles (directos o con
+	escalas) que se pueden tomar sin utilizar una aerolínea determinada. Para cada vuelo indicar la
+	aerolínea que se puede tomar, el número de escalas a realizar y la cantidad total de kilómetros a
+	recorrer.*/
 	
-	public LinkedList<Object> servicio2(Aeropuerto ao, Aeropuerto ad) {
-		LinkedList<Object> resultado = new LinkedList<>();
-		resultado.add(this.vuelosDisponibles(ao, ad));
+	public ArrayList<Object> servicio2(Aeropuerto ao, Aeropuerto ad) {
+		return this.DFS(ao, ad);
+	}
+	
+	private ArrayList<Object> DFS(Aeropuerto ao, Aeropuerto ad) {
+		ArrayList<Object> resultado = new ArrayList<>();
+		int km = 0;
+		for(Aeropuerto a : this.aeropuertos) {
+			a.setColor("No visitado");
+		}
+		for(Aeropuerto a : this.aeropuertos) {
+			if(a.getColor() == "Finalizado") {
+				return resultado;
+			}
+			else if(a.getColor() == "No visitado") {
+				this.DFSVisit(a, ad, resultado, km);
+			}
+		}
 		return resultado;
 	}
 	
-	private ArrayList<Vuelo> vuelosDisponibles(Aeropuerto ao, Aeropuerto ad) {
-		ArrayList<Vuelo> vuelosdisponibles = new ArrayList<>();
-		
-	}
-	
-	private void DFS(Vuelo v) {
-		for(Aeropuerto a : this.aeropuertos) {
-			a.setColor("Blanco");
+	private ArrayList<Object> DFSVisit(Aeropuerto a, Aeropuerto ad, ArrayList<Object> resultado, int km) {
+		a.setColor("Visitado");
+		if(a.equals(ad)) {
+			return resultado;
 		}
-		for(Aeropuerto a : this.aeropuertos) {
-			if(a.getColor() == "Blanco") {
-				this.DFSVisit(a, v);
+		else {
+			for(Aeropuerto ady : a.getAeropuertosAdyacentes()) {
+				km += a.getVuelo(ady).getKilometros();
+				if(ady.getColor() == "No visitado") {
+					resultado.addAll(a.getVuelo(ady).getAerolineas());
+					resultado.add(km);
+					this.DFSVisit(ady, ad, resultado, km);
+				}
 			}
 		}
-	}
-	
-	private void DFSVisit(Aeropuerto a, Vuelo v) {
-		int escalas = 0;
-		int km = 0;
-		a.setColor("Amarillo");
-		escalas++;
-		km = v.getKilometros();
-		for(Aeropuerto u : a.getAeropuertosAdyacentes()) {
-			if(u.getColor() == "Blanco") {
-				this.DFSVisit(u, v);
-			}
-		}
-		a.setColor("Negro");
+		return resultado;
 	}
 }

@@ -1,13 +1,12 @@
 package tpe;
 
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class Vuelo {
 	private int kilometros;
 	private boolean escabotaje;
-	private ArrayList<String> aerolineas = new ArrayList<>();
 	private Map<String, Integer> aerolineasyasientos = new HashMap<>();
 	private Aeropuerto aeropuertoorigen;
 	private Aeropuerto aeropuertoalcanzado;
@@ -16,6 +15,10 @@ public class Vuelo {
 		this.aeropuertoorigen = ao;
 		this.aeropuertoalcanzado = aa;
 		this.kilometros = km;
+	}
+	
+	public Vuelo() {
+		
 	}
 	
 	public int getKilometros() {
@@ -43,12 +46,8 @@ public class Vuelo {
 		this.aeropuertoalcanzado = aeropuertoalcanzado;
 	}
 	
-	public ArrayList<String> getAerolineas() {
-		return this.aerolineas;
-	}
-	
-	public void setAerolinea(String a) {
-		this.aerolineas.add(a);
+	public Set<String> getAerolineas() {
+		return this.aerolineasyasientos.keySet();
 	}
 	
 	public Map<String, Integer> getAerolineasYAsientos() {
