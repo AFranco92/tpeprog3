@@ -16,17 +16,17 @@ public class Vuelo {
 	private Aeropuerto aeropuertoorigen;
 	private Aeropuerto aeropuertoalcanzado;
 	private ArrayList<Reserva> reservas = new ArrayList<>();
-	
+
 	public Vuelo(Aeropuerto ao, Aeropuerto aa, int km) {
 		this.aeropuertoorigen = ao;
 		this.aeropuertoalcanzado = aa;
 		this.kilometros = km;
 	}
-	
+
 	public Vuelo() {
-		
+
 	}
-	
+
 	public ArrayList<Reserva> getReservas() {
 		return reservas;
 	}
@@ -35,7 +35,7 @@ public class Vuelo {
 		this.reservas.add(reserva);
 	}
 
-	
+
 	public int getKilometros() {
 		return this.kilometros;
 	}
@@ -60,11 +60,11 @@ public class Vuelo {
 	public void setAeropuertoAlcanzado(Aeropuerto aeropuertoalcanzado) {
 		this.aeropuertoalcanzado = aeropuertoalcanzado;
 	}
-	
+
 	public Set<String> getAerolineas() {
 		return this.aerolineasyasientos.keySet();
 	}
-	
+
 	public ArrayList<String> getAerolineasDisponibles() {
 		ArrayList<String> resultado = new ArrayList<>();
 		for(int i = 0; i < this.reservas.size(); i++) {
@@ -78,23 +78,35 @@ public class Vuelo {
 		}
 		return resultado;
 	}
-	
+
 	public Collection<Integer> getAsientosEnTotal() {
 		return this.aerolineasyasientos.values();
 	}
-	
+
 	public Map<String, Integer> getAerolineasYAsientos() {
 		return this.aerolineasyasientos;
 	}
-	
+
 	public boolean contieneAerolinea(String a) {
 		return this.aerolineasyasientos.containsKey(a);
 	}
-	
+
 	public int getAsientos(String a) {
 		return this.aerolineasyasientos.get(a);
 	}
-	
+
+	public int getAsientosDisponibles(String aerolinea) {
+		int resultado = 0;
+		for(int i = 0; i < this.reservas.size(); i++) {
+			if(this.reservas.get(i).getAerolinea().equals(aerolinea)) {
+				if(this.aerolineasyasientos.get(aerolinea) - this.reservas.get(i).getAsientosReservados() > 0) {
+					resultado = this.aerolineasyasientos.get(aerolinea) - this.reservas.get(i).getAsientosReservados();
+				}
+			}
+		}
+		return resultado;
+	}
+
 	public void setAerolineaYasientos(String a, Integer as) {
 		this.aerolineasyasientos.put(a, as);
 	}

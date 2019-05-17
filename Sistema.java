@@ -10,7 +10,9 @@ public class Sistema {
 		Vuelo v1 = new Vuelo(a1, a2, 5000);
 		Vuelo v2 = new Vuelo(a2, a3, 12000);
 		Reserva r1 = new Reserva(a1, a2, "Aerolineas Argentinas", 10);
+		v1.setAerolineaYasientos("Aerolineas Argentinas", 50);
 		v1.setReserva(r1);
+		v2.setAerolineaYasientos("United Airlines", 70);
 		grafo.setAeropuerto(a1);
 		grafo.setAeropuerto(a2);
 		grafo.setAeropuerto(a3);
@@ -18,9 +20,7 @@ public class Sistema {
 		a2.setAeropuertoAdyacente(a3);
 		a1.setVuelo(v1);
 		a2.setVuelo(v2);
-		v1.setAerolineaYasientos("Aerolineas Argentinas", 50);
-		v2.setAerolineaYasientos("United Airlines", 70);
-		grafo.servicio1(a1, a3, "Aerolineas Argentinas", v2);
+		grafo.servicio1(a1, a2, "Aerolineas Argentinas", v1);
 		grafo.servicio3("ARG", "ESP");
 		grafo.servicio2(a1, a3);
 	}

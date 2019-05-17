@@ -15,17 +15,14 @@ public class GrafoVuelos {
 	}
 
 	private boolean esDirecto(Aeropuerto ao, Aeropuerto ad, String aerolinea) {
-		if(ao.contieneAerolinea(aerolinea) && ao.tieneAdyacenteA(ad)) {
-			return true;
-		}
-		return false;
+		return ao.contieneAerolinea(aerolinea) && ao.tieneAdyacenteA(ad);
 	}
 
-	public LinkedList<Object> servicio1(Aeropuerto ao, Aeropuerto ad, String aerolinea, Vuelo v) {
-		LinkedList<Object> resultado = new LinkedList<>();
+	public ArrayList<Object> servicio1(Aeropuerto ao, Aeropuerto ad, String aerolinea, Vuelo v) {
+		ArrayList<Object> resultado = new ArrayList<>();
 		if ((v.getAeropuertoOrigen().equals(ao) && v.getAeropuertoAlcanzado().equals(ad)) && this.esDirecto(ao, ad, aerolinea)) {
 			resultado.add(v.getKilometros());
-			resultado.add(v.getAsientos(aerolinea));
+			resultado.add(v.getAsientosDisponibles(aerolinea));
 		}
 		return resultado;
 	}
