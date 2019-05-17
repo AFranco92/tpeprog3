@@ -21,7 +21,7 @@ public class Sistema {
 		a1.setVuelo(v1);
 		a2.setVuelo(v2);
 		grafo.servicio1(a1, a2, "Aerolineas Argentinas", v1);
-		grafo.servicio3("ARG", "ESP");
 		grafo.servicio2(a1, a3);
+		grafo.servicio3("ARG", "ESP");
 	}
 }

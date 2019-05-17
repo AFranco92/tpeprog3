@@ -36,13 +36,10 @@ public class GrafoVuelos {
 		int km = 0;
 		int escalas = -1;
 		for(Aeropuerto a : this.aeropuertos) {
-			a.setColor("No visitado");
+			a.setEstado("No visitado");
 		}
 		for(Aeropuerto a : this.aeropuertos) {
-			if(a.getColor() == "Finalizado") {
-				return resultado;
-			}
-			else if(a.getColor() == "No visitado") {
+			if(a.getEstado() == "No visitado") {
 				this.DFSVisit(a, ad, resultado, km, escalas);
 			}
 		}
@@ -50,14 +47,14 @@ public class GrafoVuelos {
 	}
 
 	private ArrayList<Object> DFSVisit(Aeropuerto a, Aeropuerto ad, ArrayList<Object> resultado, int km, int escalas) {
-		a.setColor("Visitado");
+		a.setEstado("Visitado");
 		if(a.equals(ad)) {
 			return resultado;
 		}
 		else {
 			for(Aeropuerto ady : a.getAeropuertosAdyacentes()) {
 				km += a.getVuelo(ady).getKilometros();
-				if(ady.getColor() == "No visitado") {
+				if(ady.getEstado() == "No visitado") {
 					escalas++;
 					resultado.addAll(a.getVuelo(ady).getAerolineas());
 					resultado.add(km);
@@ -73,10 +70,10 @@ public class GrafoVuelos {
 		ArrayList<Object> resultado = new ArrayList<>();
 		int km = 0;
 		for(Aeropuerto a : this.aeropuertos) {
-			a.setColor("No visitado");
+			a.setEstado("No visitado");
 		}
 		for(Aeropuerto a : this.aeropuertos) {
-			if(a.getColor() == "No visitado") {
+			if(a.getEstado() == "No visitado") {
 				this.DFSVisit2(paiso, paisd, a, resultado, km);
 			}
 		}
@@ -84,7 +81,7 @@ public class GrafoVuelos {
 	}
 
 	private ArrayList<Object> DFSVisit2(String paiso, String paisd, Aeropuerto a, ArrayList<Object> resultado, int km) {
-		a.setColor("Visitado");
+		a.setEstado("Visitado");
 		if(a.getPais().equals(paisd)) {
 			return resultado;
 		}
@@ -93,7 +90,7 @@ public class GrafoVuelos {
 		}
 		for(Aeropuerto ady : a.getAeropuertosAdyacentes()) {
 			km += a.getVuelo(ady).getKilometros();
-			if(ady.getPais().equals(paisd) && a.getPais().equals(paiso) && ady.getColor() == "No visitado") {
+			if(ady.getPais().equals(paisd) && a.getPais().equals(paiso) && ady.getEstado() == "No visitado") {
 				resultado.add(ady);
 				resultado.addAll(a.getVuelo(ady).getAerolineasDisponibles());
 				resultado.add(km);

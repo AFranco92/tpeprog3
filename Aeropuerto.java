@@ -3,7 +3,7 @@ package tpeprog3;
 import java.util.ArrayList;
 
 public class Aeropuerto {
-	private String color;
+	private String estado;
 	private String nombre;
 	private String pais;
 	private ArrayList<Aeropuerto> aeropuertosadyacentes = new ArrayList<>();
@@ -15,12 +15,12 @@ public class Aeropuerto {
 		this.pais = p;
 	}
 	
-	public String getColor() {
-		return this.color;
+	public String getEstado() {
+		return this.estado;
 	}
 	
-	public void setColor(String c) {
-		this.color = c;
+	public void setEstado(String c) {
+		this.estado = c;
 	}
 	
 	public String getNombre() {
