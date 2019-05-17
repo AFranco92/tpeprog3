@@ -1,4 +1,4 @@
-package tpe;
+package tpeprog3;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -31,10 +31,10 @@ public class GrafoVuelos {
 	}
 
 	public ArrayList<Object> servicio2(Aeropuerto ao, Aeropuerto ad) {
-		return this.DFS(ao, ad);
+		return this.Servicio2DFS(ao, ad);
 	}
 
-	private ArrayList<Object> DFS(Aeropuerto ao, Aeropuerto ad) {
+	private ArrayList<Object> Servicio2DFS(Aeropuerto ao, Aeropuerto ad) {
 		ArrayList<Object> resultado = new ArrayList<>();
 		int km = 0;
 		int escalas = -1;
@@ -72,17 +72,14 @@ public class GrafoVuelos {
 		return resultado;
 	}
 
-	private ArrayList<Object> DFS2(String paiso, String paisd) {
+	private ArrayList<Object> Servicio3DFS(String paiso, String paisd) {
 		ArrayList<Object> resultado = new ArrayList<>();
 		int km = 0;
 		for(Aeropuerto a : this.aeropuertos) {
 			a.setColor("No visitado");
 		}
 		for(Aeropuerto a : this.aeropuertos) {
-			if(a.getColor() == "Finalizado") {
-				return resultado;
-			}
-			else if(a.getColor() == "No visitado") {
+			if(a.getColor() == "No visitado") {
 				this.DFSVisit2(paiso, paisd, a, resultado, km);
 			}
 		}
@@ -110,7 +107,7 @@ public class GrafoVuelos {
 	}
 
 	public ArrayList<Object> servicio3(String paiso, String paisd) {
-		return this.DFS2(paiso, paisd);
+		return this.Servicio3DFS(paiso, paisd);
 	}
 
 }

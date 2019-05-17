@@ -1,4 +1,4 @@
-package tpe;
+package tpeprog3;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,6 +26,15 @@ public class Vuelo {
 	public Vuelo() {
 		
 	}
+	
+	public ArrayList<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public void setReserva(Reserva reserva) {
+		this.reservas.add(reserva);
+	}
+
 	
 	public int getKilometros() {
 		return this.kilometros;
