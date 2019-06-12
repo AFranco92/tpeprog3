@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Sistema",
+            "request": "launch",
+            "mainClass": "Sistema",
+            "projectName": "tpeprog3"
+        }
+    ]
+}

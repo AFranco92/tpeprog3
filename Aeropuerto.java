@@ -1,5 +1,3 @@
-package tpeprog3;
-
 import java.util.ArrayList;
 
 public class Aeropuerto {

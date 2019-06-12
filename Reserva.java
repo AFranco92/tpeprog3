@@ -1,5 +1,3 @@
-package tpeprog3;
-
 public class Reserva {
 	private Aeropuerto aeropuertoorigen;
 	private Aeropuerto aeropuertodestino;

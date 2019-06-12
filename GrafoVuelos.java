@@ -1,5 +1,3 @@
-package tpeprog3;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -59,11 +57,15 @@ public class GrafoVuelos {
 		return resultado;
 	}
 
-	public ArrayList<Object> servicio2(Aeropuerto ao, Aeropuerto ad) {
+	/*Servicio 2
+	Para un par de aeropuertos de origen y destino, obtener todos los vuelos disponibles (directos o con
+	escalas) que se pueden tomar sin utilizar una aerolínea determinada. Para cada vuelo indicar la
+	aerolínea que se puede tomar, el número de escalas a realizar y la cantidad total de kilómetros a  recorrer.*/
+	public ArrayList<Object> servicio2(String ao, String ad) {
 		return this.Servicio2DFS(ao, ad);
 	}
 
-	private ArrayList<Object> Servicio2DFS(Aeropuerto ao, Aeropuerto ad) {
+	private ArrayList<Object> Servicio2DFS(String ao, String ad) {
 		ArrayList<Object> resultado = new ArrayList<>();
 		int km = 0;
 		int escalas = -1;
@@ -72,13 +74,13 @@ public class GrafoVuelos {
 		}
 		for(Aeropuerto a : this.aeropuertos) {
 			if(a.getEstado() == "No visitado") {
-				this.DFSVisit(a, ad, resultado, km, escalas);
+				this.DFSVisitServicio2(ao, ad, resultado, km, escalas);
 			}
 		}
 		return resultado;
 	}
 
-	private ArrayList<Object> DFSVisit(Aeropuerto a, Aeropuerto ad, ArrayList<Object> resultado, int km, int escalas) {
+	private ArrayList<Object> DFSVisitServicio2(String ao, String ad, ArrayList<Object> resultado, int km, int escalas) {
 		a.setEstado("Visitado");
 		if(a.equals(ad)) {
 			return resultado;
@@ -91,13 +93,18 @@ public class GrafoVuelos {
 					resultado.addAll(a.getVuelo(ady).getAerolineas());
 					resultado.add(km);
 					resultado.add(escalas);
-					this.DFSVisit(ady, ad, resultado, km, escalas);
+					this.DFSVisitServicio2(ady, ad, resultado, km, escalas);
 				}
 			}
 		}
 		return resultado;
 	}
 
+
+	/*Servicio 3
+	Obtener todos los vuelos directos disponibles desde un país a otro, es decir, donde no se encuentren
+	reservados todos los asientos. Para cada vuelo se deberá indicar los aeropuertos de origen y de destino,
+	las aerolíneas con pasajes disponibles y la distancia en kilómetros.*/
 	private ArrayList<Object> Servicio3DFS(String paiso, String paisd) {
 		ArrayList<Object> resultado = new ArrayList<>();
 		int km = 0;
@@ -106,13 +113,13 @@ public class GrafoVuelos {
 		}
 		for(Aeropuerto a : this.aeropuertos) {
 			if(a.getEstado() == "No visitado") {
-				this.DFSVisit2(paiso, paisd, a, resultado, km);
+				this.DFSVisitServicio3(paiso, paisd, a, resultado, km);
 			}
 		}
 		return resultado;
 	}
 
-	private ArrayList<Object> DFSVisit2(String paiso, String paisd, Aeropuerto a, ArrayList<Object> resultado, int km) {
+	private ArrayList<Object> DFSVisitServicio3(String paiso, String paisd, Aeropuerto a, ArrayList<Object> resultado, int km) {
 		a.setEstado("Visitado");
 		if(a.getPais().equals(paisd)) {
 			return resultado;
@@ -126,7 +133,7 @@ public class GrafoVuelos {
 				resultado.add(ady);
 				resultado.addAll(a.getVuelo(ady).getAerolineasDisponibles());
 				resultado.add(km);
-				this.DFSVisit2(paiso, paisd, ady, resultado, km);
+				this.DFSVisitServicio3(paiso, paisd, ady, resultado, km);
 			}
 		}
 		return resultado;
