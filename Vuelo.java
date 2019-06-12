@@ -91,6 +91,10 @@ public class Vuelo {
 		return this.aerolineasyasientos.containsKey(a);
 	}
 
+	public ArrayList<Object> getAerolinea(String aerolinea){
+		return this.aerolineasyasientos.containsKey(aerolinea);
+	}
+
 	public int getAsientos(String a) {
 		return this.aerolineasyasientos.get(a);
 	}

@@ -18,11 +18,43 @@ public class GrafoVuelos {
 		return ao.contieneAerolinea(aerolinea) && ao.tieneAdyacenteA(ad);
 	}
 
-	public ArrayList<Object> servicio1(Aeropuerto ao, Aeropuerto ad, String aerolinea, Vuelo v) {
+	/*Servicio 1
+	Verificar si existe un vuelo directo (es decir, sin escalas) entre un aeropuerto de origen y uno de
+	destino, para una aerolínea particular. De existir, se desea conocer los kilómetros que requiere el viaje
+	y la cantidad de asientos que se encuentran disponibles (es decir, no están reservados).*/
+
+	public Aeropuerto getAeropuerto(String nombreAeropuerto){
+		Aeropuerto resultado = new Aeropuerto();
+		for (Aeropuerto aerop : this.aeropuertos) {
+			if(aerop.getNombre().equals(nombreAeropuerto)){
+				resultado = aerop;
+				return resultado;
+			}
+		}
+		return resultado;
+	}
+
+	public boolean sonAdyacentes(Aeropuerto aeropuertoOrigen, Aeropuerto aeropuertoDestino){
+		return aeropuertoOrigen.tieneAdyacenteA(aeropuertoDestino);
+	}
+	
+	public ArrayList<Object> servicio1(String ao, String ad, String aerolinea) {
 		ArrayList<Object> resultado = new ArrayList<>();
-		if ((v.getAeropuertoOrigen().equals(ao) && v.getAeropuertoAlcanzado().equals(ad)) && this.esDirecto(ao, ad, aerolinea)) {
-			resultado.add(v.getKilometros());
-			resultado.add(v.getAsientosDisponibles(aerolinea));
+		Vuelo aeropuertoOrigen = new Aeropuerto();
+		Vuelo aeropuertoDestino = new Aeropuerto();
+
+		aeropuertoOrigen = this.getAeropuerto(ao);
+		aeropuertoDestino = this.getAeropuerto(ad);
+		
+		if (aeropuertoOrigen != null && aeropuertoDestino != null) {
+			if (this.sonAdyacentes(aeropuertoOrigen, aeropuertoDestino)) {
+				if(aeropuertoOrigen.contieneAerolinea(aerolinea)){
+					Vuelo vuelo = new Vuelo();
+					vuelo = aeropuertoOrigen.getVuelo(a);
+					resultado.add(vuelo.getKilometros());
+					resultado.add(vuelo.getAsientosDisponibles());
+				}
+			}
 		}
 		return resultado;
 	}

@@ -14,6 +14,9 @@ public class Aeropuerto {
 		this.nombre = n;
 		this.pais = p;
 	}
+	public Aeropuerto() {
+		
+	}
 	
 	public String getEstado() {
 		return this.estado;
@@ -83,5 +86,17 @@ public class Aeropuerto {
 			}
 		}
 		return false;
+	}
+
+	public Vuelo getVuelo(String a) {
+		boolean condicion = true;
+		while (condicion) {
+			for (Vuelo vuelo : this.vuelos) {
+				if(vuelo.getAerolineasYAsientos.containsKey(a))
+					resultado = vuelo;
+					condicion = false;
+			}
+		}
+		return resultado;
 	}
 }
