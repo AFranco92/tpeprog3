@@ -1,3 +1,5 @@
+package tpe;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -89,8 +91,8 @@ public class Vuelo {
 		return this.aerolineasyasientos.containsKey(a);
 	}
 
-	public ArrayList<Object> getAerolinea(String aerolinea){
-		return this.aerolineasyasientos.containsKey(aerolinea);
+	public Object getAerolinea(String aerolinea){
+		return this.aerolineasyasientos.get(aerolinea);
 	}
 
 	public int getAsientos(String a) {

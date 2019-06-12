@@ -1,3 +1,5 @@
+package tpe;
+
 public class Reserva {
 	private Aeropuerto aeropuertoorigen;
 	private Aeropuerto aeropuertodestino;

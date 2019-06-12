@@ -1,3 +1,5 @@
+package tpe;
+
 import java.util.ArrayList;
 
 public class Aeropuerto {
@@ -90,11 +92,11 @@ public class Aeropuerto {
 		boolean condicion = true;
 		while (condicion) {
 			for (Vuelo vuelo : this.vuelos) {
-				if(vuelo.getAerolineasYAsientos.containsKey(a))
-					resultado = vuelo;
+				if(vuelo.getAerolineasYAsientos().containsKey(a))
+					return vuelo;
 					condicion = false;
 			}
 		}
-		return resultado;
+		return null;
 	}
 }
