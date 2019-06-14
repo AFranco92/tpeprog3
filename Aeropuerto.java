@@ -1,9 +1,12 @@
+package tpe;
+
 import java.util.ArrayList;
 
 public class Aeropuerto {
 	private String estado;
 	private String nombre;
 	private String pais;
+	private String ciudad;
 	private ArrayList<Aeropuerto> aeropuertosadyacentes = new ArrayList<>();
 	private ArrayList<Vuelo> vuelos = new ArrayList<>();
 	private ArrayList<Reserva> reservas = new ArrayList<>();
@@ -14,6 +17,26 @@ public class Aeropuerto {
 	}
 	public Aeropuerto() {
 		
+	}
+	public Aeropuerto(String nombre, String pais, String ciudad) {
+		this.nombre = nombre;
+		this.pais = pais;
+		this.ciudad = ciudad;
+	}
+	
+	public String toString() {
+		return this.pais.toString();
+	}
+	public void getDatos() {
+		System.out.println(this.nombre + "\n");
+		System.out.println(this.pais + "\n");
+	}
+	
+	public ArrayList<Reserva> getReservas() {
+		return this.reservas;
+	}
+	public void setReservas(ArrayList<Reserva> reservas) {
+		this.reservas.addAll(reservas);
 	}
 	
 	public String getEstado() {
@@ -90,11 +113,18 @@ public class Aeropuerto {
 		boolean condicion = true;
 		while (condicion) {
 			for (Vuelo vuelo : this.vuelos) {
-				if(vuelo.getAerolineasYAsientos.containsKey(a))
-					resultado = vuelo;
+				if(vuelo.getAerolineasYAsientos().containsKey(a))
+					return vuelo;
 					condicion = false;
 			}
 		}
-		return resultado;
+		return null;
 	}
+	
+	public void setVuelos(ArrayList<Vuelo> vuelos) {
+		this.vuelos.addAll(vuelos);
+	}
+	
+	
+	
 }

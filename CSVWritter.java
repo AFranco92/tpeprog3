@@ -1,4 +1,4 @@
-package tpeprog3;
+package tpe;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,10 +7,10 @@ import java.io.IOException;
 
 public class CSVWritter {
 
-	public void writeFile () {
+	public static void main(String[] args) {
 		BufferedWriter bw = null;
 		try {
-			File file = new File("Datasets/salida.csv");
+			File file = new File("[PATH-AL-ARCHIVO]/salida.csv");
 			if (!file.exists()) {
 				file.createNewFile();
 			}

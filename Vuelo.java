@@ -1,3 +1,5 @@
+package tpe;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,16 +10,21 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 public class Vuelo {
-	private int kilometros;
+	private double kilometros;
 	private boolean escabotaje;
 	private Map<String, Integer> aerolineasyasientos = new HashMap<>();
 	private Aeropuerto aeropuertoorigen;
-	private Aeropuerto aeropuertoalcanzado;
+	private Aeropuerto aeropuertoDestino;
 	private ArrayList<Reserva> reservas = new ArrayList<>();
 
-	public Vuelo(Aeropuerto ao, Aeropuerto aa, int km) {
+	public Vuelo(Aeropuerto ao, Aeropuerto aa, double km) {
 		this.aeropuertoorigen = ao;
-		this.aeropuertoalcanzado = aa;
+		this.aeropuertoDestino = aa;
+		this.kilometros = km;
+	}
+	
+	public Vuelo(String aerolinea	, Integer asientos, double km) {
+		this.setAerolineaYasientos(aerolinea, asientos);
 		this.kilometros = km;
 	}
 
@@ -34,7 +41,7 @@ public class Vuelo {
 	}
 
 
-	public int getKilometros() {
+	public double getKilometros() {
 		return this.kilometros;
 	}
 	public void setKilometros(int kilometros) {
@@ -52,11 +59,14 @@ public class Vuelo {
 	public void setAeropuertoOrigen(Aeropuerto aeropuertoorigen) {
 		this.aeropuertoorigen = aeropuertoorigen;
 	}
+	public Aeropuerto getAeropuertoDestino() {
+		return this.aeropuertoDestino;
+	}
 	public Aeropuerto getAeropuertoAlcanzado() {
-		return this.aeropuertoalcanzado;
+		return this.aeropuertoDestino;
 	}
 	public void setAeropuertoAlcanzado(Aeropuerto aeropuertoalcanzado) {
-		this.aeropuertoalcanzado = aeropuertoalcanzado;
+		this.aeropuertoDestino = aeropuertoalcanzado;
 	}
 
 	public Set<String> getAerolineas() {
@@ -89,8 +99,8 @@ public class Vuelo {
 		return this.aerolineasyasientos.containsKey(a);
 	}
 
-	public ArrayList<Object> getAerolinea(String aerolinea){
-		return this.aerolineasyasientos.containsKey(aerolinea);
+	public Object getAerolinea(String aerolinea){
+		return this.aerolineasyasientos.get(aerolinea);
 	}
 
 	public int getAsientos(String a) {
