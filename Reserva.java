@@ -1,52 +1,22 @@
 package tpe;
 
 public class Reserva {
-	private Aeropuerto aeropuertoorigen;
-	private Aeropuerto aeropuertodestino;
-	private String aerolinea;
-	private int asientosreservados;
-	
-	public Reserva(Aeropuerto ao, Aeropuerto ad, String aerolinea, int asientosreservados) {
-		this.aeropuertoorigen = ao;
-		this.aeropuertodestino = ad;
-		this.aerolinea = aerolinea;
-		this.asientosreservados = asientosreservados;
-	}
-	
-	public Aeropuerto getAeropuertoorigen() {
-		return aeropuertoorigen;
-	}
+    private String aeropuertoOrigen;
+    private String aeropuertoDestino;
+    private String aerolinea;
+    private int asientos;
 
-	public void setAeropuertoorigen(Aeropuerto aeropuertoorigen) {
-		this.aeropuertoorigen = aeropuertoorigen;
-	}
+    public Reserva(String aeropuertoOrigen, String aeropuertoDestino, String aerolinea, int asientos){
+        this.aeropuertoOrigen = aeropuertoOrigen;
+        this.aeropuertoDestino = aeropuertoDestino;
+        this.aerolinea = aerolinea;
+        this.asientos = asientos;
+    }
 
-	public Aeropuerto getAeropuertodestino() {
-		return aeropuertodestino;
-	}
-
-	public void setAeropuertodestino(Aeropuerto aeropuertodestino) {
-		this.aeropuertodestino = aeropuertodestino;
-	}
-
-	public int getAsientosreservados() {
-		return asientosreservados;
-	}
-
-	public void setAsientosreservados(int asientosreservados) {
-		this.asientosreservados = asientosreservados;
-	}
-
-	public void setAerolinea(String aerolinea) {
-		this.aerolinea = aerolinea;
-	}
-
-	public String getAerolinea() {
-		return this.aerolinea;
-	}
-	
-	public int getAsientosReservados() {
-		return this.asientosreservados;
-	}
-	
+    public void printDatos(){
+        System.out.println("Aeropuerto Origen : " + this.aeropuertoOrigen);
+        System.out.println("Aeropuerto Destino : " + this.aeropuertoDestino);
+        System.out.println("Aerolinea : " + this.aerolinea);
+        System.out.println("Asientos : " + this.asientos);
+    }
 }
