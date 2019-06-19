@@ -192,7 +192,7 @@ public class Grafo {
         Partiendo de un aeropuerto cualquiera debe visitar todos losaeropuertos restantes y retornar al aeropuerto de origen.
         Por una cuestión de costos, este recorrido debe realizarse visitando cada aeropuerto una única vez y viajando la menor cantidad posible de kilómetros totales.
 	 */
-	public ArrayList<Aeropuerto> algoritmoGreedy(String aeropuerto) {
+	public Aeropuerto algoritmoGreedy(String aeropuerto) {
 		Aeropuerto origen = new Aeropuerto();
 		for(Aeropuerto aerop : this.aeropuertos) {
 			if(aerop.getNombre().equals(aeropuerto)) {
@@ -203,7 +203,7 @@ public class Grafo {
 	}
 	
 	
-	private ArrayList<Aeropuerto> calculateShortestPathFromSource(Aeropuerto origen) {
+	private Aeropuerto calculateShortestPathFromSource(Aeropuerto origen) {
 		ArrayList<Aeropuerto> settledNodes = new ArrayList<>();
 		ArrayList<Aeropuerto> unsettledNodes = new ArrayList<>();
 		ArrayList<Aeropuerto> caminoMasCorto = new ArrayList<>();
@@ -224,7 +224,7 @@ public class Grafo {
 			}
 			settledNodes.add(currentNode);
 		}
-		return settledNodes;
+		return origen;
 	}
 	private static Aeropuerto getLowestDistanceNode( ArrayList<Aeropuerto> unsettledNodes) {
 		Aeropuerto lowestDistanceNode = null;
