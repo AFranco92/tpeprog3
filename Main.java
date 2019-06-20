@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Main {
-	private static final String path = "C:/Users/Carlos Noel/eclipseworkspace/TPEspecial/src/tpe/Datasets/";
+	private static final String path = "C:/Users/Carlos Noel/eclipse-workspace/programacion3/tpe/tpe/Datasets/";
 
 	public static void main(String[] args) {
 		Grafo grafo = new Grafo();
@@ -61,7 +61,7 @@ public class Main {
 				case 6:
 					System.out.println("Ingrese aeropuerto : ");
 					String aeropuerto = entrada.readLine();
-					System.out.println(grafo.algoritmoGreedy(aeropuerto));
+					System.out.println(grafo.getOrigenGreedy(aeropuerto));
 					break;
 				case 7:
 					System.out.println("Ingrese aeropuerto : ");
@@ -131,7 +131,9 @@ public class Main {
 				}
 				if(aeropOrigen != null && aeropDestino != null) {
 					Ruta ruta = cargarVueloAeropuerto(aeropOrigen, aeropDestino, Double.parseDouble(kilometros), vuelo, Integer.parseInt(esCabotaje));
+					Ruta vuelta = cargarVueloAeropuerto(aeropDestino, aeropOrigen, Double.parseDouble(kilometros), vuelo, Integer.parseInt(esCabotaje));
 					aeropOrigen.setRuta(ruta);
+					aeropDestino.setRuta(vuelta);
 				}
 			}
 		} catch (IOException e) {
@@ -179,3 +181,4 @@ public class Main {
 	}
 
 }
+

@@ -20,6 +20,9 @@ public class Aeropuerto {
         this.ciudad= "";
     }
 
+    public String toString() {
+    	return this.nombre;
+    }
     public String getNombre(){
         return this.nombre;
     }

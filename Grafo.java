@@ -23,7 +23,7 @@ public class Grafo {
 	}
 
 	/*SERVICIO 1 : Verificar si existe un vuelo directo (es decir, sin escalas) entre un aeropuerto de origen y uno de
-        destino, para una aerolínea particular. De existir, se desea conocer los kilometros que requiere el viaje
+        destino, para una aerol�nea particular. De existir, se desea conocer los kilometros que requiere el viaje
         y la cantidad de asientos que se encuentran disponibles (es decir, no estan reservados).
 	 */
 
@@ -61,8 +61,8 @@ public class Grafo {
 	}
 
 	/*SERVICIO 2 : Para un par de aeropuertos de origen y destino, obtener todos los vuelos disponibles (directos o con
-        escalas) que se pueden tomar sin utilizar una aerolínea determinada. Para cada vuelo indicar la
-        aerolínea que se puede tomar, el número de escalas a realizar y la cantidad total de kilómetros a recorrer.
+        escalas) que se pueden tomar sin utilizar una aerol�nea determinada. Para cada vuelo indicar la
+        aerol�nea que se puede tomar, el n�mero de escalas a realizar y la cantidad total de kil�metros a recorrer.
 	 */
 
 	public ArrayList<Object> servicio2(String aeropuertoOrigen, String aeropuertoDestino){
@@ -118,9 +118,9 @@ public class Grafo {
 		return salida;
 	}
 
-	/*SERVICIO 3:Obtener todos los vuelos directos disponibles desde un país a otro, es decir, donde no se encuentren
-        reservados todos los asientos. Para cada vuelo se deberá indicar los aeropuertos de origen y de destino,
-        las aerolíneas con pasajes disponibles y la distancia en kilómetros.
+	/*SERVICIO 3:Obtener todos los vuelos directos disponibles desde un pa�s a otro, es decir, donde no se encuentren
+        reservados todos los asientos. Para cada vuelo se deber� indicar los aeropuertos de origen y de destino,
+        las aerol�neas con pasajes disponibles y la distancia en kil�metros.
 	 */
 	public ArrayList<Object> servicio3(String paisOrigen, String paisDestino){
 		Aeropuerto aOrigen = new Aeropuerto();
@@ -190,80 +190,127 @@ public class Grafo {
 	//SEGUNDA PARTE 
 	/*
         Partiendo de un aeropuerto cualquiera debe visitar todos losaeropuertos restantes y retornar al aeropuerto de origen.
-        Por una cuestión de costos, este recorrido debe realizarse visitando cada aeropuerto una única vez y viajando la menor cantidad posible de kilómetros totales.
+        Por una cuesti�n de costos, este recorrido debe realizarse visitando cada aeropuerto una �nica vez y viajando la menor cantidad posible de kil�metros totales.
 	 */
-	public Aeropuerto algoritmoGreedy(String aeropuerto) {
-		Aeropuerto origen = new Aeropuerto();
-		for(Aeropuerto aerop : this.aeropuertos) {
-			if(aerop.getNombre().equals(aeropuerto)) {
-				origen = aerop;
-			}
-		}
-		return this.calculateShortestPathFromSource(origen);
-	}
 	
 	
-	private Aeropuerto calculateShortestPathFromSource(Aeropuerto origen) {
-		ArrayList<Aeropuerto> settledNodes = new ArrayList<>();
-		ArrayList<Aeropuerto> unsettledNodes = new ArrayList<>();
-		ArrayList<Aeropuerto> caminoMasCorto = new ArrayList<>();
-
-		unsettledNodes.add(origen);
-
-		while (unsettledNodes.size() != 0) {
-			Aeropuerto currentNode = getLowestDistanceNode(unsettledNodes);
-			unsettledNodes.remove(currentNode);
-			for (Aeropuerto aerop : currentNode.getAdyacentes()) {
-				Aeropuerto adjacentNode = aerop;
-				Ruta ruta = currentNode.getRutaAeropDestino(adjacentNode);
-				Double edgeWeight = ruta.getDistancia();
-				if (!settledNodes.contains(adjacentNode)) {
-					CalculateMinimumDistance(adjacentNode, edgeWeight, currentNode, origen, caminoMasCorto);
-					unsettledNodes.add(adjacentNode);
-				}
+	public ArrayList<Aeropuerto> getOrigenGreedy(String origen){
+		Aeropuerto aeropOrigen = new Aeropuerto();
+		for (Aeropuerto aerop : this.aeropuertos) {
+			if(aerop.getNombre().equals(origen)){
+				aeropOrigen = aerop;
 			}
-			settledNodes.add(currentNode);
+			aerop.setEstado("No visitado");
 		}
-		return origen;
-	}
-	private static Aeropuerto getLowestDistanceNode( ArrayList<Aeropuerto> unsettledNodes) {
-		Aeropuerto lowestDistanceNode = null;
-		Double lowestDistance = Double.MAX_VALUE;
-		for (Aeropuerto node: unsettledNodes) {
-			for(Ruta ruta : node.getRutas()){
-				Double nodeDistance = ruta.getDistancia();
-				if (nodeDistance < lowestDistance) {
-					lowestDistance = nodeDistance;
-					lowestDistanceNode = ruta.getDestino();
-				}
-			}
-		}
-		return lowestDistanceNode;
-	}
-	private static void CalculateMinimumDistance(Aeropuerto evaluationNode, Double edgeWeigh, Aeropuerto sourceNode, Aeropuerto aeropOrigen, ArrayList<Aeropuerto> caminoMasCorto) {
-		Double distanciaAdyacente = 0.0;
-		Double distanciaActual = 0.0;
-		for (Ruta ruta : aeropOrigen.getRutas()) {
-			if(ruta.getDestino().getNombre().equals(evaluationNode.getNombre())){
-				distanciaAdyacente+= ruta.getDistancia();
-			}else if (ruta.getDestino().getNombre().equals(sourceNode.getNombre())) {
-				distanciaActual+= ruta.getDistancia();
-			}
-		}
-		if(distanciaAdyacente < distanciaActual){
-			caminoMasCorto.add(evaluationNode);
-		}else{
-			caminoMasCorto.add(sourceNode);
-		}
-		//     Double sourceDistance = sourceNode.getDistance();
-		// if (sourceDistance + edgeWeigh < evaluationNode.getDistance()) {
-		//     evaluationNode.setDistance(sourceDistance + edgeWeigh);
-		//     ArrayList<Aeropuerto> shortestPath = new ArrayList<Aeropuerto>(sourceNode.getShortestPath());
-		//     shortestPath.add(sourceNode);
-		//     evaluationNode.setShortestPath(shortestPath);
-		// }
+		return greedy(aeropOrigen);
 	}
 
+	private ArrayList<Aeropuerto> greedy(Aeropuerto origen){
+		ArrayList<Aeropuerto> solucion = new ArrayList<>();
+		Aeropuerto candidato = origen;
+		
+		while(candidato != null){
+			candidato.setEstado("Visitado");
+			solucion.add(candidato);
+			candidato = getMejorCandidato(candidato);		
+		}
+		
+		if(this.estanVisitados() && llegoADestino(solucion.get(solucion.size()-1), origen)){
+			System.out.println("Hay solucion.");
+		}
+		return solucion;
+	}
+	private Aeropuerto getMejorCandidato(Aeropuerto origen){
+		Aeropuerto salida = null;
+		Double distanciaMenor = Double.MAX_VALUE;
+		for (Ruta ruta : origen.getRutas()) {
+			if(ruta.getDistancia() < distanciaMenor && ruta.getDestino().getEstado().equals("No visitado")){
+				salida = ruta.getDestino();
+				distanciaMenor = ruta.getDistancia();
+			}
+		}
+		return salida;
+	}
+	private boolean estanVisitados(){
+		for (Aeropuerto aerop : this.aeropuertos) {
+			if(aerop.getEstado().equals("No visitado"))
+				return false;
+		}
+		return true;
+	}
+	private boolean llegoADestino(Aeropuerto aerop, Aeropuerto origen) {
+		for (Ruta ruta : aerop.getRutas()) {
+			if(ruta.getDestino().getNombre().equals(origen.getNombre())) {
+				return true;
+			}
+		}
+		return false;
+	}
+//	public Aeropuerto algoritmoGreedy(String aeropuerto) {
+//		Aeropuerto origen = new Aeropuerto();
+//		for(Aeropuerto aerop : this.aeropuertos) {
+//			if(aerop.getNombre().equals(aeropuerto)) {
+//				origen = aerop;
+//			}
+//		}
+//		return this.calculateShortestPathFromSource(origen);
+//	}
+//	
+//	
+//	private Aeropuerto calculateShortestPathFromSource(Aeropuerto origen) {
+//		ArrayList<Aeropuerto> settledNodes = new ArrayList<>();
+//		ArrayList<Aeropuerto> unsettledNodes = this.aeropuertos;
+//		ArrayList<Aeropuerto> caminoMasCorto = new ArrayList<>();
+//
+//		unsettledNodes.add(origen);
+//
+//		while (unsettledNodes.size() != 0) {
+//			Aeropuerto currentNode = getLowestDistanceNode(unsettledNodes);
+//			unsettledNodes.remove(currentNode);
+//			for (Aeropuerto aerop : currentNode.getAdyacentes()) {
+//				Aeropuerto adjacentNode = aerop;
+//				Ruta ruta = currentNode.getRutaAeropDestino(adjacentNode);
+//				Double edgeWeight = ruta.getDistancia();
+//				if (!settledNodes.contains(adjacentNode)) {
+//					CalculateMinimumDistance(adjacentNode, edgeWeight, currentNode, origen, caminoMasCorto);
+//					unsettledNodes.add(adjacentNode);
+//				}
+//			}
+//			settledNodes.add(currentNode);
+//		}
+//		return origen;
+//	}
+//	private static Aeropuerto getLowestDistanceNode( ArrayList<Aeropuerto> unsettledNodes) {
+//		Aeropuerto lowestDistanceNode = null;
+//		Double lowestDistance = Double.MAX_VALUE;
+//		for (Aeropuerto node: unsettledNodes) {
+//			for(Ruta ruta : node.getRutas()){
+//				Double nodeDistance = ruta.getDistancia();
+//				if (nodeDistance < lowestDistance) {
+//					lowestDistance = nodeDistance;
+//					lowestDistanceNode = ruta.getDestino();
+//				}
+//			}
+//		}
+//		return lowestDistanceNode;
+//	}
+//	private static void CalculateMinimumDistance(Aeropuerto evaluationNode, Double edgeWeigh, Aeropuerto sourceNode, Aeropuerto aeropOrigen, ArrayList<Aeropuerto> caminoMasCorto) {
+//		Double distanciaAdyacente = 0.0;
+//		Double distanciaActual = 0.0;
+//		for (Ruta ruta : aeropOrigen.getRutas()) {
+//			if(ruta.getDestino().getNombre().equals(evaluationNode.getNombre())){
+//				distanciaAdyacente+= ruta.getDistancia();
+//			}else if (ruta.getDestino().getNombre().equals(sourceNode.getNombre())) {
+//				distanciaActual+= ruta.getDistancia();
+//			}
+//		}
+//		if(distanciaAdyacente < distanciaActual){
+//			caminoMasCorto.add(evaluationNode);
+//		}else{
+//			caminoMasCorto.add(sourceNode);
+//		}
+//	}
+//
 
 	//BACKTRACKING
 	public void backTracking(String aeropuerto){
