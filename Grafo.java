@@ -1,5 +1,3 @@
-package tpe;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -250,18 +248,19 @@ public class Grafo {
 				salida = aerop;
 			}
 		}
-		return this.getBackTracking(salida, salida, solucion, mejorSolucion, grafoSize, distancia);
+		solucion.add(salida);
+		this.getBackTracking(salida, salida, solucion, mejorSolucion, grafoSize, distancia);
+		return mejorSolucion;
 	}
-	private ArrayList<Aeropuerto> getBackTracking(Aeropuerto aeropuerto, Aeropuerto origen, ArrayList<Aeropuerto> solucion, ArrayList<Aeropuerto> mejorSolucion, int grafoSize, double distancia){
-		if(esSolucion(solucion, origen)){
-			if(esMejorSolucion(solucion, mejorSolucion)){
-				mejorSolucion = solucion;
-			}
-			return solucion;
+	private void getBackTracking(Aeropuerto aeropuerto, Aeropuerto origen, ArrayList<Aeropuerto> solucion, ArrayList<Aeropuerto> mejorSolucion, int grafoSize, double distancia){
+		if(esSolucion(solucion, origen, grafoSize)){
+			//if(esMejorSolucion(solucion, mejorSolucion)){
+				mejorSolucion.addAll(solucion);
+			//}
 		}
 		else{
-			while(mejorSolucion.size() < grafoSize && !this.llegoADestino(aeropuerto, origen)) {
-				for(Ruta ruta : aeropuerto.getRutas()){
+			for(Ruta ruta : aeropuerto.getRutas()){
+				if(!solucion.contains(ruta.getDestino())) {
 					solucion.add(ruta.getDestino());
 					distancia += ruta.getDistancia();
 					getBackTracking(ruta.getDestino(), origen, solucion, mejorSolucion, grafoSize, distancia);
@@ -269,17 +268,9 @@ public class Grafo {
 				}
 			}
 		}
-		// while(mejorSolucion.size() < grafoSize && !llegoADestino(aeropuerto, origen)){
-		// 	for(Ruta ruta : aeropuerto.getRutas()){
-		// 		if(ruta.getDestino().equals(origen.getNombre())){
-		// 			soluciones.addAll(getBackTracking(ruta.getDestino(), origen, solucion, soluciones, grafoSize, distancia));
-		// 		}
-		// 	}
-		// }
-		return solucion;
 	}
-	private boolean esSolucion(ArrayList<Aeropuerto> solucion, Aeropuerto origen){
-		if(solucion.size() > 0)
+	private boolean esSolucion(ArrayList<Aeropuerto> solucion, Aeropuerto origen, int grafoSize){
+		if(solucion.size() > 1 && (solucion.size() == grafoSize + 1))
 			return solucion.get(solucion.size()-1).getNombre().equals(origen.getNombre());
 		else
 			return false;
@@ -293,6 +284,6 @@ public class Grafo {
 		for(Aeropuerto aerop : mejorS){
 			mejor += aerop.getDistanciaTotal();
 		}
-		return actual > mejor;
+		return actual < mejor;
 	}
 }

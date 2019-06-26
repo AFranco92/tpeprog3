@@ -1,5 +1,3 @@
-package tpe;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Main {
-	private static final String path = "/home/carlos/eclipse-workspace/programacion3/tpe/tpeDatasets/";
+	private static final String path = "C:/Users/Carlos Noel/eclipse-workspace/programacion3/tpe/tpe/Datasets/";
 
 	public static void main(String[] args) {
 		Grafo grafo = new Grafo();

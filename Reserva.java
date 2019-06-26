@@ -1,5 +1,3 @@
-package tpe;
-
 public class Reserva {
     private String aeropuertoOrigen;
     private String aeropuertoDestino;
