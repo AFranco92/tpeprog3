@@ -1,22 +1,12 @@
 package tpe;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class Grafo {
 	private ArrayList<Aeropuerto> aeropuertos = new ArrayList<>();
 	private ArrayList<Reserva> reservas = new ArrayList<>();
-	private Set<Aeropuerto> settledNodes;
-	private Set<Aeropuerto> unSettledNodes;
-	private Map<Aeropuerto, Aeropuerto> predecessors;
-	private Map<Aeropuerto, Double> distance;
 
 	public Grafo(){
 
@@ -187,13 +177,13 @@ public class Grafo {
 
 
 
-	//SEGUNDA PARTE 
+	//SEGUNDA PARTE
 	/*
         Partiendo de un aeropuerto cualquiera debe visitar todos losaeropuertos restantes y retornar al aeropuerto de origen.
         Por una cuesti�n de costos, este recorrido debe realizarse visitando cada aeropuerto una �nica vez y viajando la menor cantidad posible de kil�metros totales.
 	 */
-	
-	
+
+
 	public ArrayList<Aeropuerto> getOrigenGreedy(String origen){
 		Aeropuerto aeropOrigen = new Aeropuerto();
 		for (Aeropuerto aerop : this.aeropuertos) {
@@ -208,13 +198,13 @@ public class Grafo {
 	private ArrayList<Aeropuerto> greedy(Aeropuerto origen){
 		ArrayList<Aeropuerto> solucion = new ArrayList<>();
 		Aeropuerto candidato = origen;
-		
+
 		while(candidato != null){
 			candidato.setEstado("Visitado");
 			solucion.add(candidato);
 			candidato = getMejorCandidato(candidato);		
 		}
-		
+
 		if(this.estanVisitados() && llegoADestino(solucion.get(solucion.size()-1), origen)){
 			System.out.println("Hay solucion.");
 		}
@@ -246,74 +236,63 @@ public class Grafo {
 		}
 		return false;
 	}
-//	public Aeropuerto algoritmoGreedy(String aeropuerto) {
-//		Aeropuerto origen = new Aeropuerto();
-//		for(Aeropuerto aerop : this.aeropuertos) {
-//			if(aerop.getNombre().equals(aeropuerto)) {
-//				origen = aerop;
-//			}
-//		}
-//		return this.calculateShortestPathFromSource(origen);
-//	}
-//	
-//	
-//	private Aeropuerto calculateShortestPathFromSource(Aeropuerto origen) {
-//		ArrayList<Aeropuerto> settledNodes = new ArrayList<>();
-//		ArrayList<Aeropuerto> unsettledNodes = this.aeropuertos;
-//		ArrayList<Aeropuerto> caminoMasCorto = new ArrayList<>();
-//
-//		unsettledNodes.add(origen);
-//
-//		while (unsettledNodes.size() != 0) {
-//			Aeropuerto currentNode = getLowestDistanceNode(unsettledNodes);
-//			unsettledNodes.remove(currentNode);
-//			for (Aeropuerto aerop : currentNode.getAdyacentes()) {
-//				Aeropuerto adjacentNode = aerop;
-//				Ruta ruta = currentNode.getRutaAeropDestino(adjacentNode);
-//				Double edgeWeight = ruta.getDistancia();
-//				if (!settledNodes.contains(adjacentNode)) {
-//					CalculateMinimumDistance(adjacentNode, edgeWeight, currentNode, origen, caminoMasCorto);
-//					unsettledNodes.add(adjacentNode);
-//				}
-//			}
-//			settledNodes.add(currentNode);
-//		}
-//		return origen;
-//	}
-//	private static Aeropuerto getLowestDistanceNode( ArrayList<Aeropuerto> unsettledNodes) {
-//		Aeropuerto lowestDistanceNode = null;
-//		Double lowestDistance = Double.MAX_VALUE;
-//		for (Aeropuerto node: unsettledNodes) {
-//			for(Ruta ruta : node.getRutas()){
-//				Double nodeDistance = ruta.getDistancia();
-//				if (nodeDistance < lowestDistance) {
-//					lowestDistance = nodeDistance;
-//					lowestDistanceNode = ruta.getDestino();
-//				}
-//			}
-//		}
-//		return lowestDistanceNode;
-//	}
-//	private static void CalculateMinimumDistance(Aeropuerto evaluationNode, Double edgeWeigh, Aeropuerto sourceNode, Aeropuerto aeropOrigen, ArrayList<Aeropuerto> caminoMasCorto) {
-//		Double distanciaAdyacente = 0.0;
-//		Double distanciaActual = 0.0;
-//		for (Ruta ruta : aeropOrigen.getRutas()) {
-//			if(ruta.getDestino().getNombre().equals(evaluationNode.getNombre())){
-//				distanciaAdyacente+= ruta.getDistancia();
-//			}else if (ruta.getDestino().getNombre().equals(sourceNode.getNombre())) {
-//				distanciaActual+= ruta.getDistancia();
-//			}
-//		}
-//		if(distanciaAdyacente < distanciaActual){
-//			caminoMasCorto.add(evaluationNode);
-//		}else{
-//			caminoMasCorto.add(sourceNode);
-//		}
-//	}
-//
+
 
 	//BACKTRACKING
-	public void backTracking(String aeropuerto){
-
+	public ArrayList<Aeropuerto> backTracking(String origen){
+		int grafoSize = this.aeropuertos.size();
+		double distancia = 0;
+		Aeropuerto salida = new Aeropuerto();
+		ArrayList<Aeropuerto> mejorSolucion = new ArrayList<>();
+		ArrayList<Aeropuerto> solucion = new ArrayList<>();
+		for (Aeropuerto aerop : this.aeropuertos) {
+			if(aerop.getNombre().equals(origen)){
+				salida = aerop;
+			}
+		}
+		return this.getBackTracking(salida, salida, solucion, mejorSolucion, grafoSize, distancia);
+	}
+	private ArrayList<Aeropuerto> getBackTracking(Aeropuerto aeropuerto, Aeropuerto origen, ArrayList<Aeropuerto> solucion, ArrayList<Aeropuerto> mejorSolucion, int grafoSize, double distancia){
+		if(esSolucion(solucion, origen)){
+			if(esMejorSolucion(solucion, mejorSolucion)){
+				mejorSolucion = solucion;
+			}
+			return solucion;
+		}
+		else{
+			while(mejorSolucion.size() < grafoSize && !this.llegoADestino(aeropuerto, origen)) {
+				for(Ruta ruta : aeropuerto.getRutas()){
+					solucion.add(ruta.getDestino());
+					distancia += ruta.getDistancia();
+					getBackTracking(ruta.getDestino(), origen, solucion, mejorSolucion, grafoSize, distancia);
+					solucion.remove(solucion.size()-1);
+				}
+			}
+		}
+		// while(mejorSolucion.size() < grafoSize && !llegoADestino(aeropuerto, origen)){
+		// 	for(Ruta ruta : aeropuerto.getRutas()){
+		// 		if(ruta.getDestino().equals(origen.getNombre())){
+		// 			soluciones.addAll(getBackTracking(ruta.getDestino(), origen, solucion, soluciones, grafoSize, distancia));
+		// 		}
+		// 	}
+		// }
+		return solucion;
+	}
+	private boolean esSolucion(ArrayList<Aeropuerto> solucion, Aeropuerto origen){
+		if(solucion.size() > 0)
+			return solucion.get(solucion.size()-1).getNombre().equals(origen.getNombre());
+		else
+			return false;
+	}
+	private boolean esMejorSolucion(ArrayList<Aeropuerto> sActual, ArrayList<Aeropuerto> mejorS){
+		double actual = 0;
+		double mejor = 0;
+		for(Aeropuerto aerop : sActual){
+			actual += aerop.getDistanciaTotal();
+		}
+		for(Aeropuerto aerop : mejorS){
+			mejor += aerop.getDistanciaTotal();
+		}
+		return actual > mejor;
 	}
 }

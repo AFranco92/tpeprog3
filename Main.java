@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Main {
-	private static final String path = "C:/Users/Carlos Noel/eclipse-workspace/programacion3/tpe/tpe/Datasets/";
+	private static final String path = "/home/carlos/eclipse-workspace/programacion3/tpe/tpeDatasets/";
 
 	public static void main(String[] args) {
 		Grafo grafo = new Grafo();
@@ -66,7 +66,7 @@ public class Main {
 				case 7:
 					System.out.println("Ingrese aeropuerto : ");
 					aeropuerto = entrada.readLine();
-					System.out.println();
+					System.out.println(grafo.backTracking(aeropuerto));
 					break;
 				}
 			}

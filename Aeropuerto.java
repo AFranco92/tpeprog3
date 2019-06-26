@@ -71,4 +71,11 @@ public class Aeropuerto {
         }
         return salida;
     }
+    public double getDistanciaTotal(){
+        double suma = 0;
+        for(Ruta ruta : this.rutas){
+            suma += ruta.getDistancia();
+        }
+        return suma;
+    }
 }
