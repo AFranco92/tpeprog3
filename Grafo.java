@@ -247,6 +247,7 @@ public class Grafo {
 			if(aerop.getNombre().equals(origen)){
 				salida = aerop;
 			}
+			aerop.setEstado("No visitado");
 		}
 		solucion.add(salida);
 		this.getBackTracking(salida, salida, solucion, mejorSolucion, grafoSize, distancia);
@@ -260,20 +261,20 @@ public class Grafo {
 		}
 		else{
 			for(Ruta ruta : aeropuerto.getRutas()){
-				if(!solucion.contains(ruta.getDestino())) {
-					solucion.add(ruta.getDestino());
-					distancia += ruta.getDistancia();
-					getBackTracking(ruta.getDestino(), origen, solucion, mejorSolucion, grafoSize, distancia);
-					solucion.remove(solucion.size()-1);
-				}
+					if((!solucion.contains(ruta.getDestino()) && ruta.getDestino().getEstado().equals("No visitado"))) {
+						solucion.add(ruta.getDestino());
+						ruta.getDestino().setEstado("Visitado");
+						distancia += ruta.getDistancia();
+						getBackTracking(ruta.getDestino(), origen, solucion, mejorSolucion, grafoSize, distancia);
+						solucion.remove(solucion.size()-1);
+					}	
 			}
 		}
+		System.out.println(mejorSolucion);
 	}
 	private boolean esSolucion(ArrayList<Aeropuerto> solucion, Aeropuerto origen, int grafoSize){
-		if(solucion.size() > 1 && (solucion.size() == grafoSize + 1))
-			return solucion.get(solucion.size()-1).getNombre().equals(origen.getNombre());
-		else
-			return false;
+		return llegoADestino(solucion.get(solucion.size() - 1), origen);
+			
 	}
 	private boolean esMejorSolucion(ArrayList<Aeropuerto> sActual, ArrayList<Aeropuerto> mejorS){
 		double actual = 0;
@@ -284,6 +285,6 @@ public class Grafo {
 		for(Aeropuerto aerop : mejorS){
 			mejor += aerop.getDistanciaTotal();
 		}
-		return actual < mejor;
+		return actual > mejor;
 	}
 }

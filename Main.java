@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Main {
-	private static final String path = "C:/Users/Carlos Noel/eclipse-workspace/programacion3/tpe/tpe/Datasets/";
+	private static final String path = "C:/Users/Carlos Noel/eclipse-workspace/gitTPE/tpeprog3/Datasets/";
 
 	public static void main(String[] args) {
 		Grafo grafo = new Grafo();
