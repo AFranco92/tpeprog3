@@ -1,3 +1,4 @@
+package testProg3;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -164,17 +165,6 @@ public class Grafo {
 		this.reservas.addAll(reservas);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
 	//SEGUNDA PARTE
 	/*
         Partiendo de un aeropuerto cualquiera debe visitar todos losaeropuertos restantes y retornar al aeropuerto de origen.
@@ -240,6 +230,7 @@ public class Grafo {
 	public ArrayList<Aeropuerto> backTracking(String origen){
 		int grafoSize = this.aeropuertos.size();
 		double distancia = 0;
+		ArrayList<Double> mejordistancia = new ArrayList<>();
 		Aeropuerto salida = new Aeropuerto();
 		ArrayList<Aeropuerto> mejorSolucion = new ArrayList<>();
 		ArrayList<Aeropuerto> solucion = new ArrayList<>();
@@ -250,41 +241,49 @@ public class Grafo {
 			aerop.setEstado("No visitado");
 		}
 		solucion.add(salida);
-		this.getBackTracking(salida, salida, solucion, mejorSolucion, grafoSize, distancia);
+		mejordistancia.add(0, Double.MAX_VALUE);
+		this.getBackTracking(salida, salida, solucion, mejorSolucion, grafoSize, distancia, mejordistancia);
 		return mejorSolucion;
 	}
-	private void getBackTracking(Aeropuerto aeropuerto, Aeropuerto origen, ArrayList<Aeropuerto> solucion, ArrayList<Aeropuerto> mejorSolucion, int grafoSize, double distancia){
-		if(esSolucion(solucion, origen, grafoSize)){
-			//if(esMejorSolucion(solucion, mejorSolucion)){
-				mejorSolucion.addAll(solucion);
-			//}
+	private void getBackTracking(Aeropuerto aeropuerto, Aeropuerto origen, ArrayList<Aeropuerto> solucion, ArrayList<Aeropuerto> mejorSolucion, int grafoSize, double distancia, ArrayList<Double> mejordistancia){
+		if(esSolucion(solucion, origen, grafoSize, distancia) != 0){
+			distancia = esSolucion(solucion, origen, grafoSize, distancia);
+			if(distancia < mejordistancia.get(0)) {
+				mejordistancia.add(0, distancia);
+				mejorSolucion = (ArrayList<Aeropuerto>) solucion.clone();
+				System.out.println(mejorSolucion);
+				System.out.println(mejordistancia.get(0));
+				
+			}
 		}
 		else{
 			for(Ruta ruta : aeropuerto.getRutas()){
-					if((!solucion.contains(ruta.getDestino()) && ruta.getDestino().getEstado().equals("No visitado"))) {
-						solucion.add(ruta.getDestino());
-						ruta.getDestino().setEstado("Visitado");
-						distancia += ruta.getDistancia();
-						getBackTracking(ruta.getDestino(), origen, solucion, mejorSolucion, grafoSize, distancia);
-						solucion.remove(solucion.size()-1);
-					}	
+				if(!solucion.contains(ruta.getDestino())) {
+					solucion.add(ruta.getDestino());
+					ruta.getDestino().setEstado("Visitado");
+					distancia += ruta.getDistancia();
+					getBackTracking(ruta.getDestino(), origen, solucion, mejorSolucion, grafoSize, distancia, mejordistancia);
+					distancia -= ruta.getDistancia();
+					solucion.remove(solucion.size()-1);
+				}	
 			}
 		}
-		System.out.println(mejorSolucion);
+		
 	}
-	private boolean esSolucion(ArrayList<Aeropuerto> solucion, Aeropuerto origen, int grafoSize){
-		return llegoADestino(solucion.get(solucion.size() - 1), origen);
-			
+	private double esSolucion(ArrayList<Aeropuerto> solucion, Aeropuerto origen, int grafoSize, double distancia){
+		if(solucion.size() == grafoSize)
+			return llegoADestinoBackTracking(solucion.get(solucion.size() - 1), origen, distancia);
+		else
+			return 0;
+
 	}
-	private boolean esMejorSolucion(ArrayList<Aeropuerto> sActual, ArrayList<Aeropuerto> mejorS){
-		double actual = 0;
-		double mejor = 0;
-		for(Aeropuerto aerop : sActual){
-			actual += aerop.getDistanciaTotal();
+	private double llegoADestinoBackTracking(Aeropuerto aerop, Aeropuerto origen, double distancia) {
+		for (Ruta ruta : aerop.getRutas()) {
+			if(ruta.getDestino().getNombre().equals(origen.getNombre())) {
+				distancia += ruta.getDistancia();
+				return distancia;
+			}
 		}
-		for(Aeropuerto aerop : mejorS){
-			mejor += aerop.getDistanciaTotal();
-		}
-		return actual > mejor;
+		return 0;
 	}
 }

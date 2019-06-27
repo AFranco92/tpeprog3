@@ -1,3 +1,4 @@
+package testProg3;
 public class Reserva {
     private String aeropuertoOrigen;
     private String aeropuertoDestino;

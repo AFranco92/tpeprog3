@@ -1,3 +1,4 @@
+package testProg3;
 import java.util.ArrayList;
 
 public class Aeropuerto {
@@ -75,5 +76,9 @@ public class Aeropuerto {
             suma += ruta.getDistancia();
         }
         return suma;
+    }
+    public boolean equals(Object obj) {
+    	Aeropuerto aux = (Aeropuerto) obj;
+    	return this.getNombre().equals(aux.getNombre());
     }
 }

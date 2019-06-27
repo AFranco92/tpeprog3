@@ -1,3 +1,4 @@
+package testProg3;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -5,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Main {
-	private static final String path = "C:/Users/Carlos Noel/eclipse-workspace/gitTPE/tpeprog3/Datasets/";
+	private static final String path = "/home/afranco92/workspace/Programa/src/testProg3/Datasets/";
 
 	public static void main(String[] args) {
 		Grafo grafo = new Grafo();
@@ -64,7 +65,7 @@ public class Main {
 				case 7:
 					System.out.println("Ingrese aeropuerto : ");
 					aeropuerto = entrada.readLine();
-					System.out.println(grafo.backTracking(aeropuerto));
+					grafo.backTracking(aeropuerto);
 					break;
 				}
 			}
